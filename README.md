@@ -1,10 +1,7 @@
 # G1_deploy_python
 
-Python deploy code for Unitree G1 based on a Finite State Machine (FSM) architecture.
-
-WARNING
-This code sends commands to a real robot.
-Make sure the robot is secured before running.
+Python deploy code for Unitree G1 based on a Finite State Machine (FSM) architecture, only using Python.
+This aims at deploying Reinforcement Learning models trained with : [unitree_rl_lab](https://github.com/unitreerobotics/unitree_rl_lab).
 
 ---
 ## 📁 Architecture
