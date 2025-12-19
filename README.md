@@ -6,9 +6,10 @@ WARNING
 This code sends commands to a real robot.
 Make sure the robot is secured before running.
 
---------------------------------------------------
+---
+## 📁 Architecture
 
-Project structure
+```
 
 G1_deploy_python/
 ├── main.py
@@ -27,8 +28,9 @@ G1_deploy_python/
     ├── command_helper.py
     ├── remote_controller.py
     └── rotation_helper.py
+```
 
---------------------------------------------------
+---
 
 Requirements
 
