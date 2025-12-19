@@ -63,4 +63,4 @@ Notes
 
 Author
 
-Theo Bounac
+Theo Bounaceur (CNRS-LORIA)
