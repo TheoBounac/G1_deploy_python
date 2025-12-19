@@ -56,7 +56,7 @@ python3 main.py
 
 Notes
 
-- DDS must be initialized before any RPC client (MotionSwitcher).
+- DDS must be initialized before any RPC client (MotionSwitcher), if SIMTOREAL -> uncomment __Init__() section in controller.py
 - The FSM manages transitions between passive, default static and velocity control states.
 - An emergency stop state is implemented and must be used with caution.
 
