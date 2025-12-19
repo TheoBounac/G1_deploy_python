@@ -31,8 +31,7 @@ G1_deploy_python/
 ```
 
 ---
-
-Requirements
+## ⚙️ System Requirements
 
 - Python >= 3.8
 - unitree_sdk2_python available in the environment
@@ -41,17 +40,22 @@ Requirements
 Recommended installation:
 pip install -e unitree_sdk2_python
 
---------------------------------------------------
+---
 
 Run
 
 From the repository root:
+```bash
 python3 -m controller.main
+```
 
 or:
-python3 main.py
 
---------------------------------------------------
+```bash
+python3 main.py
+```
+
+---
 
 Notes
 
@@ -59,7 +63,7 @@ Notes
 - The FSM manages transitions between passive, default static and velocity control states.
 - An emergency stop state is implemented and must be used with caution.
 
---------------------------------------------------
+---
 
 Author
 
