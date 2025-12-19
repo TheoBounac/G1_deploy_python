@@ -1,3 +1,4 @@
+"""La classe State est l'interface pour tous les états du robot"""
 class State:
     def __init__(self, fsm, name: str): 
         """Un State est définie par :"""
