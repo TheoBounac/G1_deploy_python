@@ -10,6 +10,7 @@ from unitree_sdk2py.comm.motion_switcher.motion_switcher_client import MotionSwi
 
 from controller.fsm import FSM
 from controller.security import Security
+from controller.buttons import Buttons
 from common.remote_controller import RemoteController, KeyMap
 from common.rotation_helper import get_gravity_orientation, transform_imu_data
 import time
@@ -117,10 +118,6 @@ class Control:
         self.control_dt_ = 0.001
         self.mode_machine_ = 0
         self.update_mode_machine_ = False
-        self.prev_start = 0  # Etat boutons
-        self.prev_select = 0 #
-        self.prev_A = 0      #
-        self.prev_B = 0      #
         self.target_dof_pos = [0] * 29 # Commande de moteurs nulle au début
 
         self.G1_NUM_MOTOR = 29
@@ -174,6 +171,9 @@ class Control:
         # Créer Security pour couper la simulation en cas de danger
         self.security = Security(self)
 
+        # Créer Buttons pour gérer les buttons de la manette
+        self.buttons = Buttons(self)
+
     def LowStateHandler(self, msg: LowState_):
         self.low_state = msg
         self.remote_controller.set(self.low_state.wireless_remote)
@@ -205,45 +205,11 @@ class Control:
             print("-> Robot G1 connecté")
             self.lowCmdWriteThreadPtr.Start()
 
-    def update_states_with_buttons(self):
-        A = self.remote_controller.button[KeyMap.X]
-        B = self.remote_controller.button[KeyMap.B]
-        start = self.remote_controller.button[KeyMap.start]
-        select = self.remote_controller.button[KeyMap.select]
-
-        if A and not self.prev_A:
-            if (self.fsm.current_state.name=="passive"):
-                self.fsm.set_state("default_static")
-
-        if start and not self.prev_start:
-            if (self.fsm.current_state.name=="default_static"):
-                self.fsm.set_state("velocity")
-
-        if B and not self.prev_B:
-            if (self.fsm.current_state.name=="velocity"):
-                self.fsm.set_state("default_static")
-            if (self.fsm.current_state.name=="default_static"):
-                self.fsm.set_state("passive")
-        
-        if select and not self.prev_select:
-            if (self.fsm.current_state.name=="velocity"):
-                self.fsm.set_state("EMERGENCY STOP")
-            if (self.fsm.current_state.name=="default_static"):
-                self.fsm.set_state("EMERGENCY STOP")
-            if (self.fsm.current_state.name=="passive"):
-                self.fsm.set_state("EMERGENCY STOP")
-
-        self.prev_A = A
-        self.prev_B = B
-        self.prev_start = start
-        self.prev_select = select
 
     def Run(self):
-        self.update_states_with_buttons()
+        self.buttons.update_states_with_buttons()
         self.fsm.step()
-
         if (self.security.check(self.target_dof_pos, )=="stop"):
             print("Arrete urgence")
-            self.fsm.set_state("passive")
-
+            self.fsm.set_state("EMERGENCY STOP")
         self.LowCmdWrite(self.target_dof_pos,self.Kp,self.Kd)

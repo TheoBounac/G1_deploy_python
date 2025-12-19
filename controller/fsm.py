@@ -1,5 +1,5 @@
 from states.base_state import State   # Interface de State
-from states.state_passive import PassiveState              # FSM va initialiser les 3 states crées, donc on les importe ici
+from states.state_passive import PassiveState              # FSM va initialiser les 3 states crées, donc on les importe ici.
 from states.state_default_static import DefaultStaticState # On rappel qu'un state (passive,default_static,velocity) est une 
 from states.state_velocity import VelocityState            # sous classe de STATE qui redéfinie ses méthodes.
 from states.emergency import Emergency                     #
@@ -7,7 +7,7 @@ from states.emergency import Emergency                     #
 class FSM:
     def __init__(self, controller):
         self.controller = controller # Le controller, celui qui vient de créer cette fsm
-        self.states: dict[str, State] = {               # Le dictionnaire des états disponibles
+        self.states: dict[str, State] = {               # Le dictionnaire des états disponibles de la fsm : c'est ici qu'on le créé
             "passive" : PassiveState(self),             #
             "default_static": DefaultStaticState(self), #
             "velocity": VelocityState(self),            #
