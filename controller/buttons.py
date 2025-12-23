@@ -6,12 +6,14 @@ class Buttons:
         self.prev_select = 0 # Etat boutons
         self.prev_A = 0      #
         self.prev_B = 0      #
+        self.prev_C = 0      #
         self.temps = 0
 
     def update_states_with_buttons(self):
         if (self.temps == 0) :
             A = self.ctrl.remote_controller.button[KeyMap.right]
             B = self.ctrl.remote_controller.button[KeyMap.left]
+            C = self.ctrl.remote_controller.button[KeyMap.up]
             select = self.ctrl.remote_controller.button[KeyMap.select]
 
             if A and not self.prev_A:
@@ -26,6 +28,12 @@ class Buttons:
                 elif (self.ctrl.fsm.current_state.name=="default_static"):
                     self.ctrl.fsm.set_state("passive")
             
+            if C and not self.prev_C:
+                if (self.ctrl.fsm.current_state.name=="velocity"):
+                    self.ctrl.fsm.set_state("dance")
+                elif (self.ctrl.fsm.current_state.name=="default_static"):
+                    self.ctrl.fsm.set_state("passive")
+            
             if select and not self.prev_select:
                 if (self.ctrl.fsm.current_state.name=="velocity"):
                     self.ctrl.fsm.set_state("EMERGENCY STOP")
@@ -36,10 +44,11 @@ class Buttons:
 
             self.prev_A = A
             self.prev_B = B
+            self.prev_C = C
 
             self.prev_select = select
         
         self.temps += 0.001
-        if (self.temps >= 0.2):
+        if (self.temps >= 0.2): # Temps de réinitialisation des boutons 
             self.temps = 0
 

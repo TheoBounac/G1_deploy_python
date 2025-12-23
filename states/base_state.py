@@ -7,12 +7,12 @@ class State:
 
     def enter(self):
         """Appelé quand on ENTRE dans cet état."""
-        pass
+        raise NotImplementedError("enter() function must be implement!")
 
     def step(self):
         """Appelé à CHAQUE tick (chaque appel de Run)."""
-        pass
+        raise NotImplementedError("enter() function must be implement!")
 
     def exit(self):
         """Appelé quand on QUITTE cet état."""
-        pass
+        raise NotImplementedError("enter() function must be implement!")
