@@ -1,4 +1,4 @@
-from controller.fsm import State
+from states.fsm import State
 import numpy as np
 
 G1_NUM_MOTOR = 29
@@ -113,6 +113,8 @@ class DefaultStaticState(State):
     def __init__(self, fsm):
         super().__init__(fsm, "default_static")
         self.ctrl = self.fsm.controller # Lien vers le controlleur des moteurs
+        self.control_dt = self.ctrl.control_dt_
+        self.G1_NUM_MOTOR = self.ctrl.G1_NUM_MOTOR
 
     def enter(self):
         print("[FSM] Enter DEFAULT_STATIC")
@@ -126,15 +128,15 @@ class DefaultStaticState(State):
         if (self.temps < duree_mouvement):
             """Déplacement linéaire du robot vers sa default pose"""
             ratio = np.clip(self.temps / duree_mouvement, 0.0, 1.0)
-            for i in range(self.ctrl.G1_NUM_MOTOR):
+            for i in range(self.G1_NUM_MOTOR):
                 motor_cmd_q.append((1.0 - ratio) * self.init_motor_state[i].q + ratio * default_motor_sdk[i])
-            
+
             ########### Consigne pour le controller ##################
             self.ctrl.target_dof_pos = motor_cmd_q                   #
             self.ctrl.Kp = Kp                                        #
             self.ctrl.Kd = Kd                                        #
             ##########################################################
-            self.temps += self.ctrl.control_dt_ 
+            self.temps += self.control_dt
             
         
         else :

@@ -8,7 +8,7 @@ from unitree_sdk2py.utils.crc import CRC
 from unitree_sdk2py.utils.thread import RecurrentThread
 from unitree_sdk2py.comm.motion_switcher.motion_switcher_client import MotionSwitcherClient
 
-from controller.fsm import FSM
+from states.fsm import FSM
 from controller.security import Security
 from controller.buttons import Buttons
 from common.remote_controller import RemoteController, KeyMap
@@ -106,7 +106,7 @@ class Control:
         self.time_2 = 0
         self.fin = 0
         self.stop = 0
-        self.control_dt_ = 0.001  # [1 ms]
+        self.control_dt_ = 0.003  # [1 ms]
         self.counter_ = 0
         self.mode_pr_ = Mode.PR
         self.mode_machine_ = 0
@@ -115,7 +115,6 @@ class Control:
         self.update_mode_machine_ = False
         self.crc = CRC()
         self.fin = 0
-        self.control_dt_ = 0.001
         self.mode_machine_ = 0
         self.update_mode_machine_ = False
         self.target_dof_pos = [0] * 29 # Commande de moteurs nulle au début
@@ -209,7 +208,7 @@ class Control:
     def Run(self):
         self.buttons.update_states_with_buttons()
         self.fsm.step()
-        if (self.security.check(self.target_dof_pos, )=="stop"):
+        """if (self.security.check(self.target_dof_pos, )=="stop"):
             print("Arrete urgence")
-            self.fsm.set_state("EMERGENCY STOP")
+            self.fsm.set_state("EMERGENCY STOP")"""
         self.LowCmdWrite(self.target_dof_pos,self.Kp,self.Kd)

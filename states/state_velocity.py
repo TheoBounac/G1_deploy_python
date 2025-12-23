@@ -1,4 +1,4 @@
-from controller.fsm import State
+from states.fsm import State
 import numpy as np
 import torch
 from collections import deque
@@ -279,6 +279,7 @@ class VelocityState(State):
     def enter(self):
         print("[FSM] Enter VELOCITY")
         self.timer = 0
+        self.control_dt = self.ctrl.control_dt_
 
 
     def step(self):
@@ -370,7 +371,7 @@ class VelocityState(State):
             ##########################################################
 
         """||step() est appelé toute les 1ms || Mais la prédiction du réseau n'est faîte que toute les 20ms ||"""
-        self.timer += 0.001
+        self.timer += self.control_dt
         if self.timer >= 0.02:
             self.timer = 0.0
 

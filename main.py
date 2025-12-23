@@ -16,7 +16,7 @@ console.clear()
 refresh_dt = 1.0 / 20.0
 
 ui = UI()
-
+"""
 try:
     with Live(ui.render_ui(ctrl.fsm), console=console, refresh_per_second=20, screen=True) as live:
         while ctrl.fin == 0:
@@ -24,5 +24,8 @@ try:
             time.sleep(refresh_dt)
 finally:
     ctrl.lowCmdWriteThreadPtr._RecurrentThread__quit = True
-
+"""
+while ctrl.fin == 0:
+    time.sleep(refresh_dt)
+    
 console.print("\n[bold]Exit[/bold]")

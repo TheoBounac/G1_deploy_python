@@ -3,6 +3,7 @@ from states.state_passive import PassiveState              # FSM va initialiser 
 from states.state_default_static import DefaultStaticState # On rappel qu'un state (passive,default_static,velocity) est une 
 from states.state_velocity import VelocityState            # sous classe de STATE qui redéfinie ses méthodes.
 from states.emergency import Emergency                     #
+from states.dance import Dance                             #
 
 class FSM:
     def __init__(self, controller):
@@ -11,7 +12,8 @@ class FSM:
             "passive" : PassiveState(self),             #
             "default_static": DefaultStaticState(self), #
             "velocity": VelocityState(self),            #
-            "EMERGENCY STOP": Emergency(self)           #
+            "EMERGENCY STOP": Emergency(self),          #
+            "dance": Dance(self)                        #
         }                                               #
         self.current_state: State | None = None # On initialise current_state à None
 
