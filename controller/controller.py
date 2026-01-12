@@ -208,7 +208,9 @@ class Control:
     def Run(self):
         self.buttons.update_states_with_buttons()
         self.fsm.step()
-        """if (self.security.check(self.target_dof_pos, )=="stop"):
+        """
+        if (self.security.check(self.target_dof_pos, )=="stop"):
             print("Arrete urgence")
-            self.fsm.set_state("EMERGENCY STOP")"""
+            self.fsm.set_state("EMERGENCY STOP")
+        """
         self.LowCmdWrite(self.target_dof_pos,self.Kp,self.Kd)

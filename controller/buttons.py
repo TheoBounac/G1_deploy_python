@@ -35,12 +35,7 @@ class Buttons:
                     self.ctrl.fsm.set_state("passive")
             
             if select and not self.prev_select:
-                if (self.ctrl.fsm.current_state.name=="velocity"):
-                    self.ctrl.fsm.set_state("EMERGENCY STOP")
-                elif (self.ctrl.fsm.current_state.name=="default_static"):
-                    self.ctrl.fsm.set_state("EMERGENCY STOP")
-                elif (self.ctrl.fsm.current_state.name=="passive"):
-                    self.ctrl.fsm.set_state("EMERGENCY STOP")
+                self.ctrl.fsm.set_state("EMERGENCY STOP")
 
             self.prev_A = A
             self.prev_B = B
