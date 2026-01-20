@@ -98,14 +98,6 @@ Full tutorial for kalman filter from Inria Paris :
 
 ---
 
-Notes
-
-- DDS must be initialized before any RPC client (MotionSwitcher), if SIMTOREAL -> uncomment __Init__() section in controller.py
-- The FSM manages transitions between passive, default static and velocity control states.
-- An emergency stop state is implemented and must be used with caution.
-
----
-
 ##  Links
 
 These are the repositories I used for my project :
