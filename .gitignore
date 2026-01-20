@@ -11,3 +11,6 @@ __pycache__/
 *.onnx
 
 /doc/gif1.gif
+
+# Large media
+/doc/gif1.gif
