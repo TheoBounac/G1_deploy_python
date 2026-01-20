@@ -5,7 +5,7 @@
  
 # <h2 align="center">G1 RL Deploy Python</h2>
 
-**This repository provides a pure-Python deployment framework for the Unitree G1 humanoid robot, designed to run reinforcement-learning policies both in simulation and on real hardware.**
+**This repository provides a Python deployment framework for the Unitree G1 humanoid robot, designed to run reinforcement-learning policies both in simulation and on real hardware.**
 **It supports SIM-to-SIM deployment in MuJoCo as well as SIM-to-REAL execution on the physical G1 robot, with a focus on UI control and safety during deployment.**
 
 **It deploys RL policies trained for locomotion and teleoperated whole-body control.**
