@@ -24,7 +24,7 @@
   </tr>
 </table>
 
----
+
 ---
 ## Project overview
 
