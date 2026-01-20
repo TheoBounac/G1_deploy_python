@@ -1,3 +1,9 @@
+ <p align="center">
+  <img src="doc/go3.png" width="1000">
+  <br>
+ </p>
+ 
+# <h2 align="center">G1 RL Deploy Python</h2>
 # G1_deploy_python
 
 Python deploy code for Unitree G1 based on a Finite State Machine (FSM) architecture, only using Python.
