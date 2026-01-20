@@ -9,3 +9,5 @@ __pycache__/
 *.bin
 *.pt
 *.onnx
+
+/doc/gif1.gif
