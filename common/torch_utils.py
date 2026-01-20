@@ -28,7 +28,8 @@
 
 from typing import Tuple
 
-from isaacgym.torch_utils import *
+#from isaacgym.torch_utils import *
+from common.torch_utils_isaacgym import *
 
 import torch
 from torch import Tensor

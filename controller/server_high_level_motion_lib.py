@@ -4,7 +4,7 @@ import time
 import redis
 import json
 import numpy as np
-import isaacgym
+#import isaacgym
 import torch
 from rich import print
 import os

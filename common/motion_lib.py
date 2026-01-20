@@ -36,7 +36,8 @@ sys.path.append("..")
 
 from pose.poselib.poselib.skeleton.skeleton3d import SkeletonMotion, SkeletonState
 from pose.poselib.poselib.core.rotation3d import *
-from isaacgym.torch_utils import *
+#from isaacgym.torch_utils import *
+from common.torch_utils_isaacgym import *
 
 from pose.utils import torch_utils
 
