@@ -60,7 +60,6 @@ G1_deploy_python/
 ## ⚙️ System Requirements
 
 - Python >= 3.8 and env from  [Isaaclab](https://github.com/isaac-sim/IsaacLab)
-- unitree_sdk2_python available in the environment
   
 ---
 
