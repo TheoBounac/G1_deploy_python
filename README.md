@@ -24,6 +24,20 @@
 </table>
 
 ---
+## Project overview
+
+This project implements a complete **Sim-to-Real** pipeline:
+
+ - 🎮 How to train Reinforcement Learning (RL) policies in **IsaacLab Simulation**
+
+ - 🤖 How to **deploy models on the real Go2 robot** via the Unitree SDK
+
+ - 🔄 How to use **ROS 2 Communication** and **Kalman filter (Inria Paris)** for real-time control and sensor/command integration
+
+The project combines **Python + ROS 2 + IsaacLab + Kalman filter (Inria Paris)**, enabling training, testing, and transferring an RL policy to the real robot.
+
+
+---
 ## 📁 Architecture
 
 ```
