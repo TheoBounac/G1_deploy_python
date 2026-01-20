@@ -27,19 +27,15 @@
 ---
 ## Project overview
 
-This project implements a complete **Sim-to-Real** pipeline:
+This project implements a complete deployment guide:
 
- - 🎮 How to train Reinforcement Learning (RL) policies in **IsaacLab Simulation**
+ - 🎮 How to deploy Reinforcement Learning (RL) policies in **Mujoco**
 
- - 🤖 How to **deploy models on the real Go2 robot** via the Unitree SDK
+ - 🤖 How to deploy models on the **real G1 robot** via the Unitree SDK
 
- - 🔄 How to use **ROS 2 Communication** and **Kalman filter (Inria Paris)** for real-time control and sensor/command integration
+Reinforcement Learning models are trained with : [unitree_rl_lab](https://github.com/unitreerobotics/unitree_rl_lab) for Locomotion, and [TWIST](https://github.com/YanjieZe/TWIST) for Teleoperated Whole-Body Control.
 
-The project combines **Python + ROS 2 + IsaacLab + Kalman filter (Inria Paris)**, enabling training, testing, and transferring an RL policy to the real robot.
-
-**Python deploy code for Unitree G1 based on a Finite State Machine (FSM) architecture, only using Python. It allows SIM-to-SIM (Mujoco) and SIM-to-REAL (Unitree G1 robot) reinforcement learning models deployment.**
-
-**This aims at deploying Reinforcement Learning models trained with : [unitree_rl_lab](https://github.com/unitreerobotics/unitree_rl_lab) for Locomotion, and [TWIST](https://github.com/YanjieZe/TWIST) for Teleoperated Whole-Body Control.**
+The project combines **Python + Unitree SDK + Mujoco + IsaacLab + Unitree_rl_lab + Twist**, enabling the deployment of RL policies to the real robot with an Interactive **UI** and **Safety measures**.
 ---
 ## 📁 Architecture
 
