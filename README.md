@@ -68,22 +68,33 @@ G1_deploy_python/
 ---
 ## ⚙️ System Requirements
 
-- Python >= 3.8 and env from  [Isaaclab](https://github.com/isaac-sim/IsaacLab)
-  
+|  Component |  Recommended Version |
+|--------------|------------------------|
+| Go2 robot (Unitree) | Edu version with feet sensors |
+| **Ubuntu** | 22.04 LTS |
+| **Python** | 3.10+ |
+| **ROS 2** | Humble |
+| **Isaac Sim / Isaac Lab** | 4.0.0+ |
+| **CUDA** | 11.8+ |
 ---
 
-Run
+---
+<h2 align="center">🔧 Installation Guides🔧</h2> 
+As mentioned earlier, this project is divided into two main parts :
 
-From the repository root:
-```bash
-python3 -m controller.main
-```
+  1. Training a reinforcement learning (RL) model in IsaacLab
+  3. Deploying the trained model on the real Unitree Go2 robot
+     
+ I strongly suggest you to follow **Part 1** then **Part 2**. If you only want to deploy an RL model, you can skip the IsaacLab training tutorial. However, make sure to use the provided model, as it follows a specific observation structure required for deployment.
 
-or:
+**Part 1** : [📘 How to train Reinforcement Learning (RL) policies on **IsaacLab Simulation**](doc/Isaaclab.md)
 
-```bash
-python3 main.py
-```
+**Part 2** : [📘 How to **deploy models on the real Go2 robot** via the Unitree SDK](doc/Deploy.md)
+
+Full tutorial for kalman filter from Inria Paris :
+
+[📘 How to use  **Kalman filter (Inria Paris)** for real-time control and sensor/command integration](doc/Deploy_with_Kalman_filter.md)
+
 
 ---
 
@@ -95,6 +106,29 @@ Notes
 
 ---
 
-Author
+##  Links
 
-Theo Bounaceur (CNRS-LORIA)
+These are the repositories I used for my project :
+
+| 🔗 Resources | 📍 Link |
+|--------------|---------|
+|  **IsaacLab (NVIDIA)** | [https://github.com/isaac-sim/IsaacLab](https://github.com/isaac-sim/IsaacLab) |
+|  **Unitree SDK2 Python** | [https://github.com/unitreerobotics/unitree_sdk2_python](https://github.com/unitreerobotics/unitree_sdk2_python) |
+|  **unitree_rl_gym** | [https://github.com/TheoBounac/Deploy_SimToReal_Go2](https://github.com/unitreerobotics/unitree_rl_gym/tree/main) |
+|  **Kalman filter for Go2** | [https://github.com/inria-paris-robotics-lab/go2_odometry?tab=readme-ov-file](https://github.com/inria-paris-robotics-lab/go2_odometry?tab=readme-ov-file) |
+
+
+
+---
+
+## 👥 Author & Contributors
+
+**Author:**  
+Théo Bounaceur  
+Laboratory **LORIA** (CNRS / University of Lorraine), Nancy, France  
+🧬 Development: Reinforcement Learning · Unitree robots · ANYmal · IsaacLab · ROS 2 · Unitree SDK2  
+📫 Contact: theo.bounaceur@loria.fr  
+
+**Supervisors / Advisors:**  
+- Adrien Guenard  
+- Cyril Regan  
