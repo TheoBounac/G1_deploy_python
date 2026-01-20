@@ -6,11 +6,12 @@
 # <h2 align="center">G1 RL Deploy Python</h2>
 # G1_deploy_python
 
-Python deploy code for Unitree G1 based on a Finite State Machine (FSM) architecture, only using Python.
+**Python deploy code for Unitree G1 based on a Finite State Machine (FSM) architecture, only using Python.
 
 This aims at deploying Reinforcement Learning models trained with : [unitree_rl_lab](https://github.com/unitreerobotics/unitree_rl_lab) for Locomotion, and [TWIST](https://github.com/YanjieZe/TWIST) for Teleoperated Whole-Body Control.
 
-It allows SIM-to-SIM (Mujoco) and SIM-to-REAL (Unitree G1 robot) reinforcement learning models deployment.
+It allows SIM-to-SIM (Mujoco) and SIM-to-REAL (Unitree G1 robot) reinforcement learning models deployment.**
+
 
 ---
 ## 📁 Architecture
