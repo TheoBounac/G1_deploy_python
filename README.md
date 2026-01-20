@@ -96,6 +96,28 @@ conda create -n go2_odometry_env python=3.10 -y
 conda activate go2_odometry_env
 ```
 
+## 2️⃣ 🤖 Ensure ROS 2 Humble is installed & sourced
+
+Install [ROS 2 Humble](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html). Then, add to path :
+
+```bash
+# run this in every new terminal session where you use ROS 2
+source /opt/ros/humble/setup.bash
+```
+## 3️⃣ 📂 Clone the required repositories
+
+<p align="center">
+<img src="files.png" width="500">
+<br>
+</p>
+
+
+```bash
+cd ~/kalman_filter/src
+git clone https://github.com/unitreerobotics/unitree_ros2.git
+
+```
+
 [📘 How to use  **Kalman filter (Inria Paris)** for real-time control and sensor/command integration](doc/Deploy_with_Kalman_filter.md)
 
 
