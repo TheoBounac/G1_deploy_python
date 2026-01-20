@@ -10,16 +10,15 @@ from unitree_sdk2py.comm.motion_switcher.motion_switcher_client import MotionSwi
 
 from states.fsm import FSM
 from controller.security import Security
+from common.remote_controller import RemoteController
 from controller.buttons import Buttons
-from common.remote_controller import RemoteController, KeyMap
-from common.rotation_helper import get_gravity_orientation, transform_imu_data
 import time
-import torch
-import numpy as np
+
 
 
 
 class G1JointIndex:
+    # These are for the SDk control of the robot (Mujoco and Real one)
     LeftHipPitch = 0
     LeftHipRoll = 1
     LeftHipYaw = 2
@@ -100,21 +99,15 @@ class Mode:
     AB = 1  # Parallel Control for A/B Joints
 
 class Control:
-    def __init__(self):
+    def __init__(self, ui):
         self.joint_info = G1JointIndex()
-        self.time = 0
-        self.time_2 = 0
-        self.fin = 0
-        self.stop = 0
-        self.control_dt_ = 0.003  # [1 ms]
-        self.counter_ = 0
+
+        self.control_dt_ = 0.001  # [1 ms]
         self.mode_pr_ = Mode.PR
-        self.mode_machine_ = 0
         self.low_cmd = unitree_hg_msg_dds__LowCmd_()  
         self.low_state = None 
-        self.update_mode_machine_ = False
         self.crc = CRC()
-        self.fin = 0
+
         self.mode_machine_ = 0
         self.update_mode_machine_ = False
         self.target_dof_pos = [0] * 29 # Commande de moteurs nulle au début
@@ -123,94 +116,116 @@ class Control:
         self.Kp = [0]*29
         self.Kd = [0]*29
         
+        self.ui = ui
+
+        self.ancien_start_check = 0
 
     def Init(self):
 
-        print("ATTENTION: Le robot va bouger, éloignez vous de lui")
-        input("Appuyer sur Entrée pour continuer ...")
+        print("WARNING: The robot will move, stay away from it")
+        input("Press Enter to continue...")
 
-        # In SIM TO SIM MODE
-        ChannelFactoryInitialize(0, "lo")
+        
+        # UNCOMMENT the mode you are using SIM or REAL :
 
-        # In SIM TO REAL MODE
-        """ 
-        ChannelFactoryInitialize(0, "enp0s31f6")
+        # In SIM TO SIM MODE                                                  
+        ChannelFactoryInitialize(0, "lo")        
+                                                                                                                                            
+        # In SIM TO REAL MODE   
+        """                                                                                                                    
+        ChannelFactoryInitialize(0, "enp0s31f6")                              
+                                                                              
+        self.msc = MotionSwitcherClient()                                     
+        self.msc.SetTimeout(5.0)                                              
+        self.msc.Init()                                                       
+                                                                              
+        status, result = self.msc.CheckMode()                                 
+        while result['name']:                                                 
+            self.msc.ReleaseMode()                                            
+            status, result = self.msc.CheckMode()                             
+            time.sleep(1)                                                     
+        """        
+                                                                   
+        ########################## Communication  #############################                                                                
+        # create publisher                                                    #
+        self.lowcmd_publisher_ = ChannelPublisher("rt/lowcmd", LowCmd_)       #
+        self.lowcmd_publisher_.Init()                                         #
+        # create subscriber                                                   #
+        self.lowstate_subscriber = ChannelSubscriber("rt/lowstate", LowState_)#
+        self.lowstate_subscriber.Init(self.LowStateHandler, 10)               #
+        # Thread that runs the policy                                         #
+        self.lowCmdWriteThreadPtr = RecurrentThread(                          #
+            interval=self.control_dt_, target=self.Run, name="Run_control"    #
+        )                                                                     #
+        #######################################################################
 
-        self.msc = MotionSwitcherClient()
-        self.msc.SetTimeout(5.0)
-        self.msc.Init()
-
-        status, result = self.msc.CheckMode()
-        while result['name']:
-            self.msc.ReleaseMode()
-            status, result = self.msc.CheckMode()
-            time.sleep(1)
-        """ 
-
-        # create publisher #
-        self.lowcmd_publisher_ = ChannelPublisher("rt/lowcmd", LowCmd_)
-        self.lowcmd_publisher_.Init()
-
-        # create subscriber # 
-        self.lowstate_subscriber = ChannelSubscriber("rt/lowstate", LowState_)
-        self.lowstate_subscriber.Init(self.LowStateHandler, 10)
-
-        # Thread that runs the policy
-        self.lowCmdWriteThreadPtr = RecurrentThread(
-            interval=self.control_dt_, target=self.Run, name="Run_control"
-        )
-
-        # Create remote
-        self.remote_controller = RemoteController() 
-
-        # Créer une fsm pour gérer les états et initialise l'état à passive
-        self.fsm = FSM(self)          
-        self.fsm.set_state("passive") 
-
-        # Créer Security pour couper la simulation en cas de danger
-        self.security = Security(self)
-
-        # Créer Buttons pour gérer les buttons de la manette
-        self.buttons = Buttons(self)
-
-    def LowStateHandler(self, msg: LowState_):
-        self.low_state = msg
-        self.remote_controller.set(self.low_state.wireless_remote)
-
-        if self.update_mode_machine_ == False:
-            self.mode_machine_ = self.low_state.mode_machine
-            self.update_mode_machine_ = True
-    
-    def LowCmdWrite(self, motor_cmd_q, Kp, Kd) :
-        for i in range(self.G1_NUM_MOTOR):
-            self.low_cmd.mode_pr = Mode.PR
-            self.low_cmd.mode_machine = self.mode_machine_
-            self.low_cmd.motor_cmd[i].mode =  1 # 1:Enable, 0:Disable
-            self.low_cmd.motor_cmd[i].tau = 0. 
-            self.low_cmd.motor_cmd[i].q = motor_cmd_q[i]
-            self.low_cmd.motor_cmd[i].dq = 0. 
-            self.low_cmd.motor_cmd[i].kp = Kp[i] 
-            self.low_cmd.motor_cmd[i].kd = Kd[i]
-                
-        self.low_cmd.crc = self.crc.Crc(self.low_cmd)
-        self.lowcmd_publisher_.Write(self.low_cmd)
-
-    def Start(self):
-        print("-> En attente de connection avec le robot")
-        while self.update_mode_machine_ == False:
-            time.sleep(1)
-
-        if self.update_mode_machine_ == True:
-            print("-> Robot G1 connecté")
-            self.lowCmdWriteThreadPtr.Start()
+        ########################################################################
+        # Create remote                                                        #
+        self.remote_controller = RemoteController()                            #
+                                                                               #   
+        # Create an FSM to manage states and initialize the state to passive   #
+        self.fsm = FSM(self)                                                   #
+        self.fsm.set_state("passive")                                          #
+                                                                               #   
+        # Create Security to stop the simulation in case of danger             #
+        self.security = Security(self)                                         #
+                                                                               #
+        # Create Buttons to handle controller buttons                          #
+        self.buttons = Buttons(self,self.ui)                                   #
+        ########################################################################
 
 
-    def Run(self):
-        self.buttons.update_states_with_buttons()
-        self.fsm.step()
-        """
-        if (self.security.check(self.target_dof_pos, )=="stop"):
-            print("Arrete urgence")
-            self.fsm.set_state("EMERGENCY STOP")
-        """
-        self.LowCmdWrite(self.target_dof_pos,self.Kp,self.Kd)
+    #########################################################################
+    def LowStateHandler(self, msg: LowState_):                              # This function retrieves the latest lowstate message 
+        self.low_state = msg                                                # from the communication channel, and is called periodically.
+        self.remote_controller.set(self.low_state.wireless_remote)          # 
+                                                                            # Refer to the unitree_sdk2_python library for more details.
+        if self.update_mode_machine_ == False:                              #
+            self.mode_machine_ = self.low_state.mode_machine                #
+            self.update_mode_machine_ = True                                #
+    #########################################################################
+
+    ##########################################################################
+    def LowCmdWrite(self, motor_cmd_q, Kp, Kd) :                             # This function sends a low-level motor command, with Kp and Kd 
+        for i in range(self.G1_NUM_MOTOR):                                   # gains as parameters, as well as the q and dq commands.
+            self.low_cmd.mode_pr = Mode.PR                                   #
+            self.low_cmd.mode_machine = self.mode_machine_                   # Refer to the unitree_sdk2_python library for more details.
+            self.low_cmd.motor_cmd[i].mode =  1 # 1:Enable, 0:Disable        #
+            self.low_cmd.motor_cmd[i].tau = 0.                               #
+            self.low_cmd.motor_cmd[i].q = motor_cmd_q[i]                     #
+            self.low_cmd.motor_cmd[i].dq = 0.                                #
+            self.low_cmd.motor_cmd[i].kp = Kp[i]                             #
+            self.low_cmd.motor_cmd[i].kd = Kd[i]                             #
+                                                                             #
+        self.low_cmd.crc = self.crc.Crc(self.low_cmd)                        #
+        self.lowcmd_publisher_.Write(self.low_cmd)                           #
+    ##########################################################################
+
+    #########################################################################
+    def Start(self):                                                        # This function waits until the connection is properly established 
+        print("-> WAITING connection with the robot")                       # before starting the model.
+        while self.update_mode_machine_ == False:                           #
+            time.sleep(1)                                                   #
+                                                                            #
+        if self.update_mode_machine_ == True:                               #
+            print("-> Robot G1 connected")                                  #
+            self.lowCmdWriteThreadPtr.Start()                               #
+    #########################################################################
+
+    ## Main function that is called in the thread with a _control_dt period #
+    def Run(self):                                                          # 
+        self.buttons.update_states_with_buttons()                           #
+                                                                            #
+        check = self.ui.start_check - self.ancien_start_check               # To check if a new mocap is sent, so the robot has to warmup its pose
+        self.ancien_start_check = self.ui.start_check                       #
+        if check == 1:                                                      #
+            self.fsm.send_start_pose()                                      #
+                                                                            #
+        self.fsm.step()                                                     #
+                                                                            #
+        if (self.security.check(self.target_dof_pos, )=="stop"):            #
+            print("EMERGENCY STOP triggered")                               #
+            self.fsm.set_state("EMERGENCY STOP")                            #
+                                                                            #
+        self.LowCmdWrite(self.target_dof_pos,self.Kp,self.Kd)               #
+    #########################################################################

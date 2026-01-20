@@ -11,8 +11,11 @@ class State:
 
     def step(self):
         """Appelé à CHAQUE tick (chaque appel de Run)."""
-        raise NotImplementedError("enter() function must be implement!")
+        raise NotImplementedError("step() function must be implement!")
 
     def exit(self):
         """Appelé quand on QUITTE cet état."""
-        raise NotImplementedError("enter() function must be implement!")
+        raise NotImplementedError("exit() function must be implement!")
+    
+    def send_start_pose(self):
+        raise NotImplementedError("send_start_pose() function must be implement!")

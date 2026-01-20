@@ -241,20 +241,18 @@ class Mode:
     AB = 1  # Parallel Control for A/B Joints
 
 
-
-
 class VelocityState(State):
     def __init__(self, fsm):
         super().__init__(fsm, "velocity")
-        self.ctrl = self.fsm.controller # Lien vers le controlleur des moteurs
+        self.ctrl = self.fsm.controller # Link to the motor controller
 
-        self.obs_base_ang_vel = deque(maxlen=3*5)      # Chaque élément de observation pour 1 obs_frame (96*5 = 480 floats)
+        self.obs_base_ang_vel = deque(maxlen=3*5)      # Each element of the observation for 1 obs_frame (96*5 = 480 floats)
         self.obs_projected_gravity = deque(maxlen=3*5) #
         self.obs_velocity_commands = deque(maxlen=3*5) #
         self.obs_joint_pos_rel = deque(maxlen=29*5)    #
         self.obs_joint_vel_rel = deque(maxlen=29*5)    #
         self.obs_last_action = deque(maxlen=29*5)      #
-        self.vx_filtered = 0 # Commandes de vitesse adoucies
+        self.vx_filtered = 0 # Smoothed velocity commands
         self.vy_filtered = 0 #
         self.wz_filtered = 0 #
         for k in range(3*5):
@@ -269,10 +267,10 @@ class VelocityState(State):
             self.obs_joint_vel_rel.append(0)
         for k in range(29*5):
             self.obs_last_action.append(0)
-        self.action_rl = np.zeros(29, dtype=np.float32) #  dernière action rl 
+        self.action_rl = np.zeros(29, dtype=np.float32) #  last RL action
 
         # Load policy
-        policy_path = project_root / "deploy_python" / "pre_train" / "policy.pt"
+        policy_path = project_root / "deploy_python" / "policies" / "locomotion_policies" / "policy.pt"
         self.policy = torch.jit.load(policy_path) 
 
 
@@ -298,7 +296,7 @@ class VelocityState(State):
             for v in gravity_orientation:                                                                         ##
                 self.obs_projected_gravity.append(v)                                                              ##
                                                                                                                   ##
-            # VELOCITY COMMAND (filtrée)                                                                          ##
+            # VELOCITY COMMAND (filtered)                                                                         ##
             vx_cmd = self.ctrl.remote_controller.ly                                                               ##
             vy_cmd = -self.ctrl.remote_controller.lx                                                              ##
             wz_cmd = -self.ctrl.remote_controller.rx                                                              ##
@@ -335,8 +333,8 @@ class VelocityState(State):
 
 
             ############################ BUILD OBS VECTOR WITH HISTORY LENGTH = 5 #####################################
-            # A chaque step, on creer observations qui prend dans l'ordre les 5 dernieres observations               ##
-            # rangés par groupe d'observations (base_ang_vel, gravity, commands, joints pos, joints vel, last_action)##
+            # At each step, we create observations that take, in order, the last 5 observations                      ##
+            # stored by observation groups (base_ang_vel, gravity, commands, joints pos, joints vel, last_action)    ##
             observations = []                                                                                        ##
             for elem in self.obs_base_ang_vel:                                                                       ##
                 observations.append(elem)                                                                            ##
@@ -364,13 +362,13 @@ class VelocityState(State):
             self.action_rl = self.policy(obs_tensor).detach().numpy().squeeze()  # (29,)
             target_dof_pos = self.action_rl * 0.25 + offset
             
-            ########### Consigne pour le controller ##################
+            ########### Command for the controller ##################
             self.ctrl.target_dof_pos = target_dof_pos[policy_to_sdk] #
             self.ctrl.Kp = Kp                                        #
             self.ctrl.Kd = Kd                                        #
             ##########################################################
 
-        """||step() est appelé toute les 1ms || Mais la prédiction du réseau n'est faîte que toute les 20ms ||"""
+        """||step() is called every 1ms || But the network prediction is only done every 20ms ||"""
         self.timer += self.control_dt
         if self.timer >= 0.02:
             self.timer = 0.0

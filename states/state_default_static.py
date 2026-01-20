@@ -108,11 +108,11 @@ default_motor_sdk = [
     0.0,   # right_wrist_yaw_joint      28
 ]
 
-""" Déplace le robot vers sa position de départ et le maintient comme ca """
+""" Moves the robot to its initial position and keeps it there """
 class DefaultStaticState(State): 
     def __init__(self, fsm):
         super().__init__(fsm, "default_static")
-        self.ctrl = self.fsm.controller # Lien vers le controlleur des moteurs
+        self.ctrl = self.fsm.controller # Link to the motor controller.
         self.control_dt = self.ctrl.control_dt_
         self.G1_NUM_MOTOR = self.ctrl.G1_NUM_MOTOR
 
@@ -126,12 +126,12 @@ class DefaultStaticState(State):
         motor_cmd_q = []
 
         if (self.temps < duree_mouvement):
-            """Déplacement linéaire du robot vers sa default pose"""
+            """Linear movement of the robot toward its default pose"""
             ratio = np.clip(self.temps / duree_mouvement, 0.0, 1.0)
             for i in range(self.G1_NUM_MOTOR):
                 motor_cmd_q.append((1.0 - ratio) * self.init_motor_state[i].q + ratio * default_motor_sdk[i])
 
-            ########### Consigne pour le controller ##################
+            ################### Controller Target ####################
             self.ctrl.target_dof_pos = motor_cmd_q                   #
             self.ctrl.Kp = Kp                                        #
             self.ctrl.Kd = Kd                                        #
@@ -140,8 +140,8 @@ class DefaultStaticState(State):
             
         
         else :
-            """Maintient du robot dans sa default pose"""
-            ########### Consigne pour le controller ##################
+            """Keeps the robot in its default pose."""
+            ################### Controller Target ####################
             self.ctrl.target_dof_pos = default_motor_sdk             #
             self.ctrl.Kp = Kp                                        #
             self.ctrl.Kd =Kd                                         #
