@@ -82,6 +82,20 @@ G1_deploy_python/
 ---
 <h2 align="center">🔧 Installation Guides🔧</h2> 
 
+## 1️⃣ 🐍 Create & prepare the Conda environment
+
+Create your workspace :
+```bash
+mkdir -p ~/kalman_filter/src
+```
+
+
+Create the env conda :
+```bash
+conda create -n go2_odometry_env python=3.10 -y
+conda activate go2_odometry_env
+```
+
 [📘 How to use  **Kalman filter (Inria Paris)** for real-time control and sensor/command integration](doc/Deploy_with_Kalman_filter.md)
 
 
