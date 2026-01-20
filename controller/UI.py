@@ -105,74 +105,66 @@ class UI:
 
     
 
-    def _start_high_level_motion(self, motion_file: str):
-        """Lance server_high_level_motion_lib.py dans un thread séparé (env=twist)."""
-
-        def _runner():
-            # Choisis où tu veux écrire les logs
-            log_dir = os.path.join(os.getcwd(), "logs")
-            os.makedirs(log_dir, exist_ok=True)
-            log_path = os.path.join(log_dir, "high_level_motion.log")
-
-            # Commande: exécuter dans l'env twist
-            cmd = [
-                "conda", "run", "-n", "twist",
-                "python", "controller/server_high_level_motion_lib.py",
-                "--motion_file", motion_file,
-            ]
-
-            with self._lock:
-                # Stop l'ancien HL si besoin
-                if self._hl_proc is not None and self._hl_proc.poll() is None:
-                    try:
-                        self._hl_proc.terminate()
-                        self._hl_proc.wait(timeout=1.0)
-                    except Exception:
-                        try:
-                            self._hl_proc.kill()
-                        except Exception:
-                            pass
-                    self._hl_proc = None
-
-                try:
-                    # IMPORTANT: redirect stdout/stderr pour ne pas casser rich.Live
-                    self._hl_log_f = open(log_path, "w", buffering=1)
-                    self._hl_proc = subprocess.Popen(
-                        cmd,
-                        cwd=os.getcwd(),
-                        stdout=self._hl_log_f,
-                        stderr=subprocess.STDOUT,
-                        start_new_session=True,   # détache du terminal (plus stable)
-                    )
-                except Exception as e:
-                    self.mocap_active_idx = None
-                    print(f"[UI] Failed to start high-level motion: {e}")
-                    return
-
-            # Surveille la fin du process (sans bloquer l'UI)
-            while True:
-                with self._lock:
-                    p = self._hl_proc
-                if p is None:
-                    break
-                if p.poll() is not None:
-                    # fini
-                    break
-                time.sleep(0.05)
-
-            # Quand HL fini, on "désactive" le vert
-            with self._lock:
-                self.mocap_active_idx = None
-                try:
-                    if getattr(self, "_hl_log_f", None):
-                        self._hl_log_f.close()
-                except Exception:
-                    pass
-        
-        self.start_check += 1
-        t = threading.Thread(target=_runner, daemon=True)
-        self._hl_thread = t
-        t.start()
+    #################################################################################################################
+    # [MOTION] Start high-level motion server in separate thread (env=twist) — NO FILE LOGS                         #
+    #################################################################################################################
+    def _start_high_level_motion(self, motion_file: str):                                                           #
+        """Lance server_high_level_motion_lib.py dans un thread séparé (env=twist)."""                              #
+                                                                                                                    #
+        def _runner():                                                                                              #
+            # Commande: exécuter dans l'env twist                                                                   #
+            cmd = [                                                                                                 #
+                "conda", "run", "-n", "twist",                                                                      #
+                "python", "controller/server_high_level_motion_lib.py",                                             #
+                "--motion_file", motion_file,                                                                       #
+            ]                                                                                                       #
+                                                                                                                    #
+            with self._lock:                                                                                        #
+                # Stop l'ancien HL si besoin                                                                        #
+                if self._hl_proc is not None and self._hl_proc.poll() is None:                                      #
+                    try:                                                                                            #
+                        self._hl_proc.terminate()                                                                   #
+                        self._hl_proc.wait(timeout=1.0)                                                             #
+                    except Exception:                                                                               #
+                        try:                                                                                        #
+                            self._hl_proc.kill()                                                                    #
+                        except Exception:                                                                           #
+                            pass                                                                                    #
+                    self._hl_proc = None                                                                            #
+                                                                                                                    #
+                try:                                                                                                #
+                    # IMPORTANT: redirect stdout/stderr vers /dev/null pour ne pas casser rich.Live                 #
+                    self._hl_proc = subprocess.Popen(                                                               #
+                        cmd,                                                                                        #
+                        cwd=os.getcwd(),                                                                            #
+                        stdout=subprocess.DEVNULL,                                                                  #
+                        stderr=subprocess.DEVNULL,                                                                  #
+                        start_new_session=True,                                                                     #
+                    )                                                                                               #
+                except Exception as e:                                                                              #
+                    self.mocap_active_idx = None                                                                    #
+                    print(f"[UI] Failed to start high-level motion: {e}")                                           #
+                    return                                                                                          #
+                                                                                                                    #
+            # Surveille la fin du process (sans bloquer l'UI)                                                       #
+            while True:                                                                                             #
+                with self._lock:                                                                                    #
+                    p = self._hl_proc                                                                               #
+                if p is None:                                                                                       #
+                    break                                                                                           #
+                if p.poll() is not None:                                                                            #
+                    break                                                                                           #
+                time.sleep(0.05)                                                                                    #
+                                                                                                                    #
+            # Quand HL fini, on "désactive" le vert                                                                 #
+            with self._lock:                                                                                        #
+                self.mocap_active_idx = None                                                                        #
+                                                                                                                    #
+        self.start_check += 1                                                                                       #
+        t = threading.Thread(target=_runner, daemon=True)                                                           #
+        self._hl_thread = t                                                                                         #
+        t.start()                                                                                                   #
+    #################################################################################################################
 
 
     # ------------------------------ Render ------------------------------
