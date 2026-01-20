@@ -50,10 +50,6 @@ G1_deploy_python/
 │   ├── security.py
 │   ├── server_high_level_motion_lib.py
 │   └── UI.py
-├── doc/
-├── policies/
-│   └── locomotion_policies/
-│   └── mimici_policies/
 ├── states/
 │   ├── fsm.py
 │   ├── base_state.py
@@ -62,6 +58,10 @@ G1_deploy_python/
 │   ├── state_velocity.py
 │   ├── state_mocap.py
 │   └── emergency.py
+├── policies/
+│   └── locomotion_policies/
+│   └── mimici_policies/
+├── doc/
 ├── common/
 └── assets/
 
