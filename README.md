@@ -32,9 +32,11 @@ This project implements a complete deployment guide:
 
  - 🎮 How to deploy Reinforcement Learning (RL) policies in **Mujoco**
 
- - 🤖 How to deploy models on the **real G1 robot** via the Unitree SDK
+ - 🤖 How to deploy models on the **real G1 robot** via  Unitree SDK
 
-Reinforcement Learning models are trained with : [unitree_rl_lab](https://github.com/unitreerobotics/unitree_rl_lab) for Locomotion, and [TWIST](https://github.com/YanjieZe/TWIST) for Teleoperated Whole-Body Control. The project combines **Python + Unitree SDK + Mujoco + IsaacLab + Unitree_rl_lab + Twist**, enabling the deployment of RL policies to the real robot with an Interactive **UI** and **Safety measures**.
+Reinforcement Learning models are trained with : [unitree_rl_lab](https://github.com/unitreerobotics/unitree_rl_lab) for Locomotion, and [TWIST](https://github.com/YanjieZe/TWIST) for Teleoperated Whole-Body Control. 
+
+The project combines **Python + Unitree SDK + Mujoco + IsaacLab + Unitree_rl_lab + Twist**, enabling the deployment of RL policies to the real robot with an Interactive **UI** and **Safety measures**.
 
 ---
 ## 📁 Architecture
