@@ -64,9 +64,7 @@ G1_deploy_python/
 │   └── emergency.py
 ├── common/
 └── assets/
-    ├── g1/
-    ├── unitree_g1/
-    └── twist_general_motion_tracker.pt
+
 
 ```
 
