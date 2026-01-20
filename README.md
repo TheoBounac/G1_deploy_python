@@ -41,7 +41,6 @@ The project combines **Python + ROS 2 + IsaacLab + Kalman filter (Inria Paris)**
 ## 📁 Architecture
 
 ```
-
 G1_deploy_python/
 ├── main.py
 ├── controller/
@@ -64,8 +63,6 @@ G1_deploy_python/
 ├── doc/
 ├── common/
 └── assets/
-
-
 ```
 
 ---
