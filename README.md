@@ -61,10 +61,7 @@ G1_deploy_python/
 
 - Python >= 3.8 and env from  [Isaaclab](https://github.com/isaac-sim/IsaacLab)
 - unitree_sdk2_python available in the environment
-
-Recommended installation:
-pip install -e unitree_sdk2_python
-
+  
 ---
 
 Run
