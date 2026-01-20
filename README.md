@@ -4,7 +4,6 @@
  </p>
  
 # <h2 align="center">G1 RL Deploy Python</h2>
-# G1_deploy_python
 
 **Python deploy code for Unitree G1 based on a Finite State Machine (FSM) architecture, only using Python. It allows SIM-to-SIM (Mujoco) and SIM-to-REAL (Unitree G1 robot) reinforcement learning models deployment.**
 
