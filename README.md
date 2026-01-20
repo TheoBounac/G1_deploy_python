@@ -5,9 +5,10 @@
  
 # <h2 align="center">G1 RL Deploy Python</h2>
 
-**Python deploy code for Unitree G1 based on a Finite State Machine (FSM) architecture, only using Python. It allows SIM-to-SIM (Mujoco) and SIM-to-REAL (Unitree G1 robot) reinforcement learning models deployment.**
+**This repository provides a pure-Python deployment framework for the Unitree G1 humanoid robot, designed to run reinforcement-learning policies both in simulation and on real hardware.**
+**It supports SIM-to-SIM deployment in MuJoCo as well as SIM-to-REAL execution on the physical G1 robot, with a focus on UI control and safety during deployment.**
 
-**This aims at deploying Reinforcement Learning models trained with : [unitree_rl_lab](https://github.com/unitreerobotics/unitree_rl_lab) for Locomotion, and [TWIST](https://github.com/YanjieZe/TWIST) for Teleoperated Whole-Body Control.**
+**It deploys RL policies trained for locomotion and teleoperated whole-body control.**
 
 
 <table align="center" style="border-collapse:collapse;">
@@ -36,7 +37,9 @@ This project implements a complete **Sim-to-Real** pipeline:
 
 The project combines **Python + ROS 2 + IsaacLab + Kalman filter (Inria Paris)**, enabling training, testing, and transferring an RL policy to the real robot.
 
+**Python deploy code for Unitree G1 based on a Finite State Machine (FSM) architecture, only using Python. It allows SIM-to-SIM (Mujoco) and SIM-to-REAL (Unitree G1 robot) reinforcement learning models deployment.**
 
+**This aims at deploying Reinforcement Learning models trained with : [unitree_rl_lab](https://github.com/unitreerobotics/unitree_rl_lab) for Locomotion, and [TWIST](https://github.com/YanjieZe/TWIST) for Teleoperated Whole-Body Control.**
 ---
 ## 📁 Architecture
 
