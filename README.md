@@ -48,14 +48,12 @@ G1_deploy_python/
 │   ├── state_velocity.py
 │   ├── state_mocap.py
 │   └── emergency.py
-└── common/
-    ├── command_helper.py
-    ├── motion_lib_pkl.py
-    ├── params.py
-    ├── remote_controller.py
-    ├── rot_utils.py
-    ├── torch_utils.py
-    └── rotation_helper.py
+├── common/
+└── assets/
+    ├── g1/
+    ├── unitree_g1/
+    └── twist_general_motion_tracker.pt
+
 ```
 
 ---
