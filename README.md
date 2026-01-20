@@ -31,19 +31,30 @@
 G1_deploy_python/
 ├── main.py
 ├── controller/
+│   ├── buttons.py
 │   ├── controller.py
-│   ├── fsm.py
-│   ├── deploy_fsm.py
-│   └── security.py
+│   ├── security.py
+│   ├── server_high_level_motion_lib.py
+│   └── UI.py
+├── doc/
+├── policies/
+│   └── locomotion_policies/
+│   └── mimici_policies/
 ├── states/
+│   ├── fsm.py
 │   ├── base_state.py
 │   ├── state_passive.py
 │   ├── state_default_static.py
 │   ├── state_velocity.py
+│   ├── state_mocap.py
 │   └── emergency.py
 └── common/
     ├── command_helper.py
+    ├── motion_lib_pkl.py
+    ├── params.py
     ├── remote_controller.py
+    ├── rot_utils.py
+    ├── torch_utils.py
     └── rotation_helper.py
 ```
 
