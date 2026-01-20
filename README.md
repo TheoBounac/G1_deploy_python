@@ -11,6 +11,11 @@
 **This aims at deploying Reinforcement Learning models trained with : [unitree_rl_lab](https://github.com/unitreerobotics/unitree_rl_lab) for Locomotion, and [TWIST](https://github.com/YanjieZe/TWIST) for Teleoperated Whole-Body Control.**
 
 
+<p align="center">
+  <b>Simulation IsaacLab</b>
+  <img src="doc/gif3.gif" width="700">
+  <br>
+</p>
 
 
 ---
