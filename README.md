@@ -13,7 +13,7 @@
 
 <table align="center" style="border-collapse:collapse;">
 <th style="width:50%; text-align:center;">
-  <div style="display:inline-block; width:200px;">Deploy on real robot </div>
+  <div style="display:inline-block; width:200px;">Deploy on Mujoco</div>
 </th>
 
   <tr>
