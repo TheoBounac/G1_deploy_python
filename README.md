@@ -169,7 +169,7 @@ You should see :
   <br>
  </p>
  
-Press `9` to deactivate the elastic band and `7` / `8` to raise or lower the robot.
+Press `9` to deactivate the elastic band and `7` / `8` to raise / lower the robot.
 
 ---
 
