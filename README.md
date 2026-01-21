@@ -141,7 +141,7 @@ python3 main.py
 You should see :
 
  <p align="center">
-  <img src="doc/im4.png" width="500">
+  <img src="doc/im4.png" width="600">
   <br>
  </p>
  
@@ -165,7 +165,7 @@ python3 unitree_mujoco.py
 
 You should see :
  <p align="center">
-  <img src="doc/im3.png" width="500">
+  <img src="doc/im5.png" width="700">
   <br>
  </p>
  
