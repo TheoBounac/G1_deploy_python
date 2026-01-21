@@ -13,7 +13,11 @@
 
 <table align="center" style="border-collapse:collapse;">
 <th style="width:50%; text-align:center;">
-  <div style="display:inline-block; width:200px;">Deploy on Mujoco</div>
+  <div style="display:inline-block; width:200px;">Deploy on Mujoco</div>You should see :
+ <p align="center">
+  <img src="doc/im5.png" width="700">
+  <br>
+ </p>
 </th>
 
   <tr>
@@ -159,11 +163,11 @@ git clone https://github.com/unitreerobotics/unitree_mujoco.git
 ```
 You must replace the config files in unitree_mujoco/simulate_python by those in config_mujoco like this :
 
-You should see :
  <p align="center">
   <img src="doc/im7.png" width="600">
   <br>
  </p>
+
  
 ```bash
 cd unitree_mujoco/simulate_python
