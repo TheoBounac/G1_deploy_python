@@ -7,7 +7,6 @@ __pycache__/
 .env.*
 *.log
 *.bin
-*.pt
 *.onnx
 
 /doc/gif1.gif
