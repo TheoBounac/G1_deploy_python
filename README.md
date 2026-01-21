@@ -145,7 +145,6 @@ You should see :
   <br>
  </p>
  
-[📘 How to use  **Kalman filter (Inria Paris)** for real-time control and sensor/command integration](doc/Deploy_with_Kalman_filter.md)
 
 ---
 ## 4️⃣ 🏗️ Launch the Mujoco simulation
@@ -169,7 +168,7 @@ You should see :
   <img src="doc/im3.png" width="500">
   <br>
  </p>
-Press `9` to deactivate the elastic band and `7`/`8` to raise/lower the robot.
+Press '9' to deactivate the elastic band and `7`/`8` to raise/lower the robot.
 ---
 
 ##  Links
