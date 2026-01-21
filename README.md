@@ -168,7 +168,7 @@ You should see :
   <img src="doc/im3.png" width="500">
   <br>
  </p>
-Press '9' to deactivate the elastic band and `7`/`8` to raise/lower the robot.
+Press ```9``` to deactivate the elastic band and `7`/`8` to raise/lower the robot.
 ---
 
 ##  Links
