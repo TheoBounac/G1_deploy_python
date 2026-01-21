@@ -128,11 +128,12 @@ class Control:
         
         # UNCOMMENT the mode you are using SIM or REAL :
 
-        # In SIM TO SIM MODE                                                  
+        # In SIM TO SIM MODE          
+                                               
         ChannelFactoryInitialize(0, "lo")        
-                                                                                                                                            
+        
         # In SIM TO REAL MODE   
-        """                                                                                                                    
+        """                                                                                                                  
         ChannelFactoryInitialize(0, "enp0s31f6")                              
                                                                               
         self.msc = MotionSwitcherClient()                                     
@@ -144,7 +145,7 @@ class Control:
             self.msc.ReleaseMode()                                            
             status, result = self.msc.CheckMode()                             
             time.sleep(1)                                                     
-        """        
+        """ 
                                                                    
         ########################## Communication  #############################                                                                
         # create publisher                                                    #
