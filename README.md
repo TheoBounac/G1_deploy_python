@@ -204,7 +204,16 @@ Use the remote to navigate in the UI.
     <img src="doc/net.png" width="700">
     <br>
    </p>
+   
 3. **Switch the code in real mode**
+ In controller.py, just switch to real mode and put your network interface like this :
+
+<p align="center">
+    <img src="doc/im8.png" width="700">
+    <br>
+   </p>
+
+   
 ---
 
 ##  Links
