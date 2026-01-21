@@ -168,7 +168,7 @@ You must replace the config files in unitree_mujoco/simulate_python by those in 
   <br>
  </p>
 
- 
+Now connect the remote to your PC and run the simulation with :
 ```bash
 cd unitree_mujoco/simulate_python
 python3 unitree_mujoco.py
@@ -181,6 +181,7 @@ You should see :
  </p>
  
 Press `9` to deactivate the elastic band and `7` / `8` to raise / lower the robot.
+Use the remote to navigate in the UI.
 
 ---
 
