@@ -190,7 +190,7 @@ Use the remote to navigate in the UI.
    Go to Settings/Network and then IPv4. Fill the gaps as follows :
    
    <p align="center">
-    <img src="doc/ipv4.png" width="700">
+    <img src="doc/ipv4.png" width="600">
     <br>
    </p>
 2. **Collect the network interface**
@@ -201,7 +201,7 @@ Use the remote to navigate in the UI.
    ifconfig
    ```
    <p align="center">
-    <img src="doc/net.png" width="700">
+    <img src="doc/net.png" width="600">
     <br>
    </p>
    
@@ -209,7 +209,7 @@ Use the remote to navigate in the UI.
  In controller.py, just switch to real mode and put your network interface like this :
 
 <p align="center">
-    <img src="doc/im8.png" width="700">
+    <img src="doc/im8.png" width="500">
     <br>
    </p>
 
