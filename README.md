@@ -87,38 +87,64 @@ G1_deploy_python/
 
 Create your workspace :
 ```bash
-mkdir -p ~/kalman_filter/src
+mkdir -p ~/G1
 ```
-
 
 Create the env conda :
 ```bash
-conda create -n go2_odometry_env python=3.10 -y
-conda activate go2_odometry_env
+conda create -n env_g1_deploy python=3.11
+conda activate env_g1_deploy
 ```
 
-## 2️⃣ 🤖 Ensure ROS 2 Humble is installed & sourced
+Install libraries :
+```bash
+pip install -U torch==2.7.0 torchvision==0.22.0 --index-url https://download.pytorch.org/whl/cu128
+pip install rich
+pip install scipy
+pip insatll redis
+```
 
-Install [ROS 2 Humble](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html). Then, add to path :
+## 2️⃣ 🤖 Install Unitree SDK2 Python
+
+Install [Unitree SDK2 Python](https://github.com/unitreerobotics/unitree_sdk2_python) in the G1 folder. Tutorial :
 
 ```bash
-# run this in every new terminal session where you use ROS 2
-source /opt/ros/humble/setup.bash
+cd ~/G1
+sudo apt install python3-pip
+git clone https://github.com/unitreerobotics/unitree_sdk2_python.git
+cd unitree_sdk2_python
 ```
-## 3️⃣ 📂 Clone the required repositories
 
-<p align="center">
-<img src="files.png" width="500">
-<br>
-</p>
-
+you must now download cyclonedds :
 
 ```bash
-cd ~/kalman_filter/src
-git clone https://github.com/unitreerobotics/unitree_ros2.git
+cd ~/G1
+git clone https://github.com/eclipse-cyclonedds/cyclonedds -b releases/0.10.x 
+cd cyclonedds && mkdir build install && cd build
+cmake .. -DCMAKE_INSTALL_PREFIX=../install
+cmake --build . --target install
+```
+Then add to path :
 
+```bash
+cd ~/G1/unitree_sdk2_python
+export CYCLONEDDS_HOME="~/G1/cyclonedds/install"  # MODIFY THE PATH IF YOU DOWNLOADED CYCLONEDDS IN ANOTHER PLACE
+pip3 install -e .
 ```
 
+## 3️⃣ 🚀 Run the code
+
+```bash
+cd ~/G1/G1_deploy_python
+python3 main.py
+```
+You should see :
+
+ <p align="center">
+  <img src="doc/im3.png" width="500">
+  <br>
+ </p>
+ 
 [📘 How to use  **Kalman filter (Inria Paris)** for real-time control and sensor/command integration](doc/Deploy_with_Kalman_filter.md)
 
 
