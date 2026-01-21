@@ -179,6 +179,32 @@ You should see :
 Press `9` to deactivate the elastic band and `7` / `8` to raise / lower the robot.
 Use the remote to navigate in the UI.
 
+
+
+---
+## 5️⃣ 🤖 Run it on Real robot G1
+
+1. **Connect the robot with ethernet**
+   
+   Turn on the robot and connect it to your PC using an Ethernet cable.
+   Go to Settings/Network and then IPv4. Fill the gaps as follows :
+   
+   <p align="center">
+    <img src="ipv4.png" width="700">
+    <br>
+   </p>
+2. **Collect the network interface**
+
+   Type in the terminal, and collect the adress :
+
+   ```bash
+   ifconfig
+   ```
+   <p align="center">
+    <img src="net.png" width="700">
+    <br>
+   </p>
+3. **Switch the code in real mode**
 ---
 
 ##  Links
