@@ -190,7 +190,7 @@ Use the remote to navigate in the UI.
    Go to Settings/Network and then IPv4. Fill the gaps as follows :
    
    <p align="center">
-    <img src="ipv4.png" width="700">
+    <img src="doc/ipv4.png" width="700">
     <br>
    </p>
 2. **Collect the network interface**
@@ -201,7 +201,7 @@ Use the remote to navigate in the UI.
    ifconfig
    ```
    <p align="center">
-    <img src="net.png" width="700">
+    <img src="doc/net.png" width="700">
     <br>
    </p>
 3. **Switch the code in real mode**
