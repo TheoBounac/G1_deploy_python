@@ -16,13 +16,13 @@ ctrl = Control(ui)
 ctrl.Init()
 ctrl.Start()
 
-"""try:
+try:
     with Live(ui.render_ui(ctrl.fsm), console=console, refresh_per_second=20, screen=True) as live:
         while True:
             live.update(ui.render_ui(ctrl.fsm), refresh=True)
             time.sleep(refresh_dt)
 finally:
-    ctrl.lowCmdWriteThreadPtr._RecurrentThread__quit = True"""
+    ctrl.lowCmdWriteThreadPtr._RecurrentThread__quit = True
 
 while True:
     time.sleep(refresh_dt)
