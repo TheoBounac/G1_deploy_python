@@ -270,7 +270,7 @@ class VelocityState(State):
         self.action_rl = np.zeros(29, dtype=np.float32) #  last RL action
 
         # Load policy
-        policy_path = project_root / "deploy_python" / "policies" / "locomotion_policies" / "policy.pt"
+        policy_path = "policies/locomotion_policies/policy.pt"
         self.policy = torch.jit.load(policy_path) 
 
 

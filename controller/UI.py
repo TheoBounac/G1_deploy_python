@@ -41,9 +41,9 @@ MOCAP_ROOT = "/home/theo/G1/TWIST/twist_motion_dataset/"
 
 # Tu modifies ici les 3 mouvements
 MOCAP_MOVES = [
-    {"name": "Crouch", "file": "mpi_mosh/00043_simple_crouch.pkl"},
-    {"name": "Gestures",   "file": "humaneva/S1_Gestures_3.pkl"},
-    {"name": "Kick",   "file": "humaneva/S1_Box_3.pkl"},
+    {"name": "Crouch", "file": "mocap_files/00043_simple_crouch.pkl"},
+    {"name": "Gestures",   "file": "mocap_files/S1_Gestures_3.pkl"},
+    {"name": "Kick",   "file": "mocap_files/S1_Box_3.pkl"},
 ]
 
 
@@ -100,7 +100,7 @@ class UI:
         """Appui sur START en mode mocap."""
         idx = self.mocap_sel_idx
         self.mocap_active_idx = idx
-        motion_file = os.path.join(MOCAP_ROOT, MOCAP_MOVES[idx]["file"])
+        motion_file = MOCAP_MOVES[idx]["file"]
         self._start_high_level_motion(motion_file)
 
     
