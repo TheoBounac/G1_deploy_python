@@ -147,7 +147,29 @@ You should see :
  
 [📘 How to use  **Kalman filter (Inria Paris)** for real-time control and sensor/command integration](doc/Deploy_with_Kalman_filter.md)
 
+---
+## 4️⃣ 🏗️ Launch the Mujoco simulation
 
+Now you should install [Unitree Mujoco](https://github.com/unitreerobotics/unitree_mujoco) in the G1 folder. Tutorial :
+
+```bash
+cd ~/G1
+pip3 install mujoco
+pip3 install pygame
+git clone https://github.com/unitreerobotics/unitree_mujoco.git
+```
+
+```bash
+cd unitree_mujoco/simulate_python
+python3 unitree_mujoco.py
+```
+
+You should see :
+ <p align="center">
+  <img src="doc/im3.png" width="500">
+  <br>
+ </p>
+Press `9` to deactivate the elastic band and `7`/`8` to raise/lower the robot.
 ---
 
 ##  Links
