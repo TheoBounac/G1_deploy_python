@@ -161,7 +161,7 @@ You must replace the config files in unitree_mujoco/simulate_python by those in 
 
 You should see :
  <p align="center">
-  <img src="doc/im7.png" width="700">
+  <img src="doc/im7.png" width="600">
   <br>
  </p>
  
