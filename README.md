@@ -61,6 +61,7 @@ G1_deploy_python/
 ├── policies/
 │   └── locomotion_policies/
 │   └── mimici_policies/
+├── mocap_files/
 ├── doc/
 ├── common/
 └── assets/
