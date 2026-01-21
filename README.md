@@ -213,6 +213,22 @@ Use the remote to navigate in the UI.
     <br>
    </p>
 
+  4. **Run the code**
+     Run the code with :
+```bash
+cd ~/G1/G1_deploy_python
+python3 main.py
+```
+You should see :
+
+ <p align="center">
+  <img src="doc/im4.png" width="600">
+  <br>
+ </p>
+
+ ---
+⚠️ **Safety Notice:**  
+ At any time just press `SELECT` on the unitree remote controller to trigger emergency mode. Be carefull, the robot will **FALL**.
    
 ---
 
