@@ -157,7 +157,14 @@ pip3 install mujoco
 pip3 install pygame
 git clone https://github.com/unitreerobotics/unitree_mujoco.git
 ```
+You must replace the config files in unitree_mujoco/simulate_python by those in config_mujoco like this :
 
+You should see :
+ <p align="center">
+  <img src="doc/im7.png" width="700">
+  <br>
+ </p>
+ 
 ```bash
 cd unitree_mujoco/simulate_python
 python3 unitree_mujoco.py
