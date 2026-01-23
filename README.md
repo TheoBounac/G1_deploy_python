@@ -76,7 +76,6 @@ G1_deploy_python/
 | **Ubuntu** | 22.04 LTS |
 | **Python** | 3.10+ |
 | **ROS 2** | Humble |
-| **Isaac Sim / Isaac Lab** | 4.0.0+ |
 | **CUDA** | 11.8+ |
 ---
 
