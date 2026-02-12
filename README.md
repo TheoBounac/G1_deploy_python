@@ -101,6 +101,8 @@ pip install -U torch==2.7.0 torchvision==0.22.0 --index-url https://download.pyt
 pip install rich
 pip install scipy
 pip insatll redis
+pip install pyyaml
+pip install tqdm
 ```
 
 ## 2️⃣ 🤖 Install Unitree SDK2 Python
