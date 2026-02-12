@@ -112,12 +112,17 @@ class UI:
         """Lance server_high_level_motion_lib.py dans un thread séparé (env=twist)."""                              #
                                                                                                                     #
         def _runner():                                                                                              #
-            # Commande: exécuter dans l'env twist                                                                   #
+            project_root = "/home/theo/G1/G1_deploy_python"                                                         #
+                                                                                                                    #
+            # Lancer comme toi en manuel: python -m controller.server_high_level_motion_lib                         #
             cmd = [                                                                                                 #
-                "conda", "run", "-n", "twist",                                                                      #
-                "python", "controller/server_high_level_motion_lib.py",                                             #
+                "conda", "run", "-n", "env_g1_deploy",                                                              #
+                "python", "-m", "controller.server_high_level_motion_lib",                                          #
                 "--motion_file", motion_file,                                                                       #
             ]                                                                                                       #
+                                                                                                                    #
+            env = os.environ.copy()                                                                                 #
+            env["PYTHONPATH"] = project_root + (":" + env["PYTHONPATH"] if "PYTHONPATH" in env else "")             #
                                                                                                                     #
             with self._lock:                                                                                        #
                 # Stop l'ancien HL si besoin                                                                        #
@@ -133,10 +138,11 @@ class UI:
                     self._hl_proc = None                                                                            #
                                                                                                                     #
                 try:                                                                                                #
-                    # IMPORTANT: redirect stdout/stderr vers /dev/null pour ne pas casser rich.Live                 #
+                    # IMPORTANT: cwd = racine du projet, sinon imports/fichiers relatifs cassent                    #
                     self._hl_proc = subprocess.Popen(                                                               #
                         cmd,                                                                                        #
-                        cwd=os.getcwd(),                                                                            #
+                        cwd=project_root,                                                                           #
+                        env=env,                                                                                    #
                         stdout=subprocess.DEVNULL,                                                                  #
                         stderr=subprocess.DEVNULL,                                                                  #
                         start_new_session=True,                                                                     #

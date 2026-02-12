@@ -26,5 +26,5 @@ finally:
 
 while True:
     time.sleep(refresh_dt)
-    
+   
 console.print("\n[bold]Exit[/bold]")
